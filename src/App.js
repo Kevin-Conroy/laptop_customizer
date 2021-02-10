@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Header from './Header';
+import Option from './Option';
 
 // Normalizes string as a slug - a string that is safe to use
 // in both URLs and html attributes
@@ -49,20 +51,16 @@ class App extends Component {
       const options = this.props.features[feature].map(item => {
         const itemHash = slugify(JSON.stringify(item));
         return (
-          <div key={itemHash} className="feature__item">
-            <input
-              type="radio"
-              id={itemHash}
-              className="feature__option"
-              name={slugify(feature)}
-              checked={item.name === this.state.selected[feature].name}
-              onChange={e => this.updateFeature(feature, item)}
-            />
-            <label htmlFor={itemHash} className="feature__label">
-              {item.name} ({USCurrencyFormat.format(item.cost)})
-            </label>
-          </div>
-        );
+        <Option 
+        itemHash={itemHash}
+        feature={feature}
+        item={item}
+        selected={this.state.selected}
+        updateFeature={this.updateFeature}
+        USCurrencyFormat={USCurrencyFormat} 
+        />
+        )
+
       });
 
       return (
@@ -97,9 +95,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header>
-          <h1>ELF Computing | Laptops</h1>
-        </header>
+        <Header />
         <main>
           <form className="main__form">
             <h2>Customize your laptop</h2>
