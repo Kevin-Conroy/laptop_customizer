@@ -1,6 +1,6 @@
-import React from "react"
-import Option from './Option'
-import Total from './Total'
+import React from "react";
+import Total from "./Total";
+import Option from "./Option";
 
 /*const summary = Object.keys(this.state.selected).map((feature, idx) => {
     const featureHash = feature + '-' + idx;
@@ -8,46 +8,29 @@ import Total from './Total'
 
 */
 
-const USCurrencyFormat = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  });
-
 function MainSummary(props) {
-
-
-    const summary = Object.keys(props.selection).map((feature, idx) => {
-        const featureHash = feature + '-' + idx;
-        const selectedOption = props.selection[feature];
-
+  const summary = Object.keys(props.selection).map((feature, idx) => {
+    const featureHash = feature + "-" + idx;
+    const selectedOption = props.selection[feature];
 
     return (
-        <div>
-        <h2>Your cart</h2>
- 
-        <div className="summary__option" key={featureHash}>
-        <div className="summary__option__label">{feature} </div>
-        <div className="summary__option__value">{selectedOption.name}</div>
-        <div className="summary__option__cost">
-          {USCurrencyFormat.format(selectedOption.cost)}
-        </div>
+      <div>
+        <Option
+          featureHash={featureHash}
+          feature={feature}
+          selectedOption={selectedOption}
+        />
       </div>
+    );
+  });
 
-
-            
-            <Total />
-
-        </div>
-    )
-
-})
-
-return (
-  <div>
-    {summary}
-  </div>
-)
-
+  return (
+    <div>
+      <h2>Your cart</h2>
+      {summary}
+      <Total total={props.total} />
+    </div>
+  );
 }
 
-export default MainSummary
+export default MainSummary;
