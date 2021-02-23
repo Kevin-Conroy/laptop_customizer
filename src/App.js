@@ -3,7 +3,6 @@ import Header from './Header';
 import Option from './Option';
 //import MainForm from './MainForm';
 import MainSummary from './MainSummary';
-import Total from './Total';
 
 // Normalizes string as a slug - a string that is safe to use
 // in both URLs and html attributes
@@ -76,20 +75,7 @@ class App extends Component {
       );
     });
 
-    const summary = Object.keys(this.state.selected).map((feature, idx) => {
-      const featureHash = feature + '-' + idx;
-      const selectedOption = this.state.selected[feature];
-
-      return (
-        <div className="summary__option" key={featureHash}>
-          <div className="summary__option__label">{feature} </div>
-          <div className="summary__option__value">{selectedOption.name}</div>
-          <div className="summary__option__cost">
-            {USCurrencyFormat.format(selectedOption.cost)}
-          </div>
-        </div>
-      );
-    });
+    
 
     const total = Object.keys(this.state.selected).reduce(
       (acc, curr) => acc + this.state.selected[curr].cost,
@@ -105,10 +91,12 @@ class App extends Component {
             {features}
           </form>
           <section className="main__summary">
-            <MainSummary summary={summary}
-                         total={total}
-            />
 
+            <MainSummary total={total}
+                        
+                        selection={this.state.selected}
+            />
+            
           </section>
         </main>
       </div>
